@@ -1,15 +1,15 @@
-const { suite } = require("uvu");
-const assert = require("uvu/assert");
+import { suite } from "uvu";
+import assert from "uvu/assert";
 
-const nock = require("nock");
+import nock from "nock";
 nock.disableNetConnect();
 
-const { Probot, ProbotOctokit } = require("probot");
+import { Probot, ProbotOctokit } from "probot";
+import { EmitterWebhookEvent } from "@octokit/webhooks";
 
-const app = require("./app");
+import app from "../src/app";
 
-/** @type {import('probot').Probot */
-let probot;
+let probot: Probot;
 const test = suite("app");
 test.before.each(() => {
   probot = new Probot({
@@ -29,11 +29,14 @@ test.before.each(() => {
 test("recieves issues.opened event", async function () {
   const mock = nock("https://api.github.com")
     // create new check run
-    .post("/repos/probot/example-vercel/issues/1/comments", (requestBody) => {
-      assert.equal(requestBody, { body: "Hello, World!" });
+    .post(
+      "/repos/probot/example-vercel/issues/1/comments",
+      (requestBody: Body) => {
+        assert.equal(requestBody, { body: "Hello, World!" });
 
-      return true;
-    })
+        return true;
+      }
+    )
     .reply(201, {});
 
   await probot.receive({
@@ -51,7 +54,7 @@ test("recieves issues.opened event", async function () {
         number: 1,
       },
     },
-  });
+  } as EmitterWebhookEvent<any>);
 
   assert.equal(mock.activeMocks(), []);
 });
