@@ -15,7 +15,7 @@
     "probot": "^12.3.0"
   },
   "devDependencies": {
-    "@octokit/webhooks": "^12.1.1",
+    "@octokit/webhooks": "^12.1.2",
     "nock": "^13.5.0",
     "smee-client": "^2.0.1",
     "ts-node": "^10.9.2",
