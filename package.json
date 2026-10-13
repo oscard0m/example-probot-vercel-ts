@@ -12,7 +12,7 @@
   "license": "ISC",
   "repository": "github:probot/example-vercel",
   "dependencies": {
-    "probot": "^13.0.0"
+    "probot": "^14.0.0"
   },
   "devDependencies": {
     "@octokit/webhooks": "^14.0.0",
